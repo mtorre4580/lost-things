@@ -1,5 +1,5 @@
 angular
-.module('lostThings', ['ionic'])
+.module('lostThings', ['ionic', 'lostThings.controllers', 'lostThings.services'])
 .run(function($ionicPlatform, $rootScope, $state, Utils, Authentication) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.Keyboard) {
@@ -56,7 +56,6 @@ angular
         requiresAuth: true
       }
     })
-
     .state('detail', {
       url: '/detail/:id',
       templateUrl: 'templates/detail.html',
@@ -65,7 +64,6 @@ angular
         requiresAuth: true
       }
     })
-
     .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
@@ -88,8 +86,14 @@ angular
     $ionicConfigProvider.backButton.text('Atrás');
 
 }).constant('API_SERVER', 'http://localhost/lostthings/api');
+
+//Módulo para los services
+angular.module('lostThings.services', [])
+//Módulo para los controllers
+angular.module('lostThings.controllers', [])
+
 angular
-.module('lostThings')
+.module('lostThings.controllers')
 .controller('DetailCtrl', [
 	'$scope',
 	'$stateParams',
@@ -136,7 +140,7 @@ angular
 
 	}
 ]);
-angular.module('lostThings')
+angular.module('lostThings.controllers')
 .controller('HomeCtrl', [
 	'$scope',
 	'$state',
@@ -215,7 +219,7 @@ angular.module('lostThings')
 	}
 ]);
 angular
-.module('lostThings')
+.module('lostThings.controllers')
 .controller('LoginCtrl', [
 	'$scope',
 	'$state',
@@ -269,7 +273,7 @@ angular
 	}
 ]);
 angular
-.module('lostThings')
+.module('lostThings.controllers')
 .controller('LogoutCtrl', [
 	'$state',
 	'Authentication',
@@ -279,7 +283,7 @@ angular
 	}
 ]);
 angular
-.module('lostThings')
+.module('lostThings.controllers')
 .controller('PublishCtrl', [
 	'$scope',
 	'$state',
@@ -330,7 +334,7 @@ angular
 	}
 ]);
 angular
-.module('lostThings')
+.module('lostThings.controllers')
 .controller('RegisterCtrl', [
 	'$scope',
 	'$state',
@@ -385,7 +389,7 @@ angular
 	}
 ]);
 angular
-.module('lostThings')
+.module('lostThings.services')
 .factory('Authentication', 
     ['$http', 'API_SERVER', 
     function($http, API_SERVER){
@@ -479,7 +483,7 @@ angular
     }
 ]);
 angular
-.module('lostThings')
+.module('lostThings.services')
 .factory('Items', 
     ['$http', 'API_SERVER', 
     function($http, API_SERVER){
@@ -553,7 +557,7 @@ angular
 ]);
 
 angular
-.module('lostThings')
+.module('lostThings.services')
 .factory('Utils', 
     ['$ionicPopup', 
     function($ionicPopup){

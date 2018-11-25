@@ -1,5 +1,5 @@
 angular
-.module('lostThings')
+.module('lostThings.services')
 .factory('Items', 
     ['$http', 'API_SERVER', 
     function($http, API_SERVER){

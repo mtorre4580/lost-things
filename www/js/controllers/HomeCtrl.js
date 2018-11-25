@@ -1,4 +1,4 @@
-angular.module('lostThings')
+angular.module('lostThings.controllers')
 .controller('HomeCtrl', [
 	'$scope',
 	'$state',

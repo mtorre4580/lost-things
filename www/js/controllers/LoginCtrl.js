@@ -1,5 +1,5 @@
 angular
-.module('lostThings')
+.module('lostThings.controllers')
 .controller('LoginCtrl', [
 	'$scope',
 	'$state',

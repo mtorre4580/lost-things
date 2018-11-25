@@ -1,5 +1,5 @@
 angular
-.module('lostThings')
+.module('lostThings.services')
 .factory('Utils', 
     ['$ionicPopup', 
     function($ionicPopup){

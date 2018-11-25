@@ -1,5 +1,5 @@
 angular
-.module('lostThings')
+.module('lostThings.controllers')
 .controller('PublishCtrl', [
 	'$scope',
 	'$state',
