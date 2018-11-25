@@ -5,13 +5,17 @@ angular
 	'$stateParams',
 	'Utils',
 	'Items',
-	function($scope, $stateParams, Utils, Items) {
+	'Authentication',
+	function($scope, $stateParams, Utils, Items, Authentication) {
 		
 		//Request item
 		$scope.item = null;
 
+		//Información del usuario logueado
+		const idUser = Authentication.getUserData().id;
+
 		//Request comentario
-		$scope.comment = { description: '', idUser: '' };
+		$scope.comment = { description: '', idUser: idUser };
 
 		//Obtengo el detalle de la publicación
 		Items.getDetail($stateParams.id).then(function(res) {
@@ -32,7 +36,7 @@ angular
 					$scope.errors.description = 'El campo no puede ser vacío';
 				}
 			} else {
-				Items.commentPublication(comment).then(res => {
+				Items.commentPublication(comment, idUser).then(res => {
 					$scope.item.comentarios = $scope.item.comentarios.concat(res);
 					$scope.comment = '';
 					$scope.$apply();

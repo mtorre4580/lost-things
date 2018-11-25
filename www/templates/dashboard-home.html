@@ -1,7 +1,8 @@
 <ion-view view-title="Home">
+    <!-- Se agrega al navbar el button de búsqueda -->
     <ion-nav-bar  class="bar-stable">
         <ion-nav-buttons side="right">
-            <button class="button icon-left ion-search button-search" ng-click="toggleSearch()"></button>
+          <button class="button icon-left ion-search button-search" ng-click="toggleSearch()"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content class="padding background-content">
@@ -13,7 +14,7 @@
           <button class="button button-dark button-small">Buscar</button>
         </form>
       </div>
-      <h2 class="title-last-items">Últimos items publicados</h2>
+      <h1 class="title-last-items">Últimos items publicados</h1>
       <!-- Actualizar Registros, referencia => https://ionicframework.com/docs/v1/api/directive/ionRefresher/ -->
       <ion-refresher pulling-text="Actualizando resultados..." on-refresh="doRefresh()"></ion-refresher>
       <!-- Resultados de items si hay -->
@@ -21,17 +22,17 @@
         <ion-item class="list card" ng-repeat="item in items" ng-click="goDetail(item.producto.id)">
             <div class="item item-avatar">
               <img ng-src="{{item.usuario.avatar}}" alt="avatar de {{item.usuario.nombre}}">
-              <h3 class="text-bold">{{item.usuario.nombre}}</h3>
+              <h2 class="text-bold">{{item.usuario.nombre}}</h2>
               <p>{{item.producto.fecha_publicacion}}</p>
             </div>
             <div class="item item-body">
               <h3>{{item.producto.nombre}}</h3>
               <img class="full-image" ng-src="{{item.producto.foto}}" alt="{{item.producto.nombre}}">
               <p>{{item.producto.descripcion}}</p>
-              <a href="#" class="subdued comments-block">
+              <span class="subdued comments-block">
                 <ion-icon name="chatboxes"></ion-icon>
                 {{item.producto.cantComentarios}}
-              </a>
+              </span>
             </div>
         </ion-item>
       </ion-list>

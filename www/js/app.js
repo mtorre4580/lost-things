@@ -57,8 +57,8 @@ angular
       }
     })
 
-    .state('item', {
-      url: '/item/:id',
+    .state('detail', {
+      url: '/detail/:id',
       templateUrl: 'templates/detail.html',
       controller: 'DetailCtrl',
       data: {

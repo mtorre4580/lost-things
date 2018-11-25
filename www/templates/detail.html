@@ -1,7 +1,13 @@
 <ion-view title="Detalle">
+    <!-- Se agrega el botón back porque las tabs tienen su propio history y no reconoce el back... -->
+    <ion-nav-bar  class="bar-stable">
+        <ion-nav-buttons side="left">
+            <a class="button icon-left ion-chevron-left button-clear" href="/#dashboard/home">Atrás</a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
     <ion-content class="background-content">
         <div class="padding">
-            <h2 class="title-item-detail">{{item.nombre}}</h2>
+            <h1 class="title-item-detail">{{item.nombre}}</h1>
             <div>
                 <img class="img-responsive pic-item" ng-src="{{item.foto}}" alt="{{item.nombre}}">
             </div>

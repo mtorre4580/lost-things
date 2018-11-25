@@ -6,6 +6,8 @@ angular
         
         let token = null;
 
+        let userData = null;
+
         /**
          * Permite autenticar al usuario contra la API de PHP
          * @param {Object} user 
@@ -67,10 +69,23 @@ angular
             return token;
         }
 
+        /**
+         * Permite obtener la información del usuario logueado
+         * @returns {Object} userData
+         */
+        function getUserData() {
+            let userData = {
+                id: '222',
+                usuario: 'pepe'
+            }
+            return userData;
+        }
+
         return {
             login: login,
             register: register,
             isLogged: isLogged,
+            getUserData: getUserData,
             getToken: getToken,
             logout: logout
         }

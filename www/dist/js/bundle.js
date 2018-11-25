@@ -57,8 +57,8 @@ angular
       }
     })
 
-    .state('item', {
-      url: '/item/:id',
+    .state('detail', {
+      url: '/detail/:id',
       templateUrl: 'templates/detail.html',
       controller: 'DetailCtrl',
       data: {
@@ -95,13 +95,17 @@ angular
 	'$stateParams',
 	'Utils',
 	'Items',
-	function($scope, $stateParams, Utils, Items) {
+	'Authentication',
+	function($scope, $stateParams, Utils, Items, Authentication) {
 		
 		//Request item
 		$scope.item = null;
 
+		//Información del usuario logueado
+		const idUser = Authentication.getUserData().id;
+
 		//Request comentario
-		$scope.comment = { description: '', idUser: '' };
+		$scope.comment = { description: '', idUser: idUser };
 
 		//Obtengo el detalle de la publicación
 		Items.getDetail($stateParams.id).then(function(res) {
@@ -122,7 +126,7 @@ angular
 					$scope.errors.description = 'El campo no puede ser vacío';
 				}
 			} else {
-				Items.commentPublication(comment).then(res => {
+				Items.commentPublication(comment, idUser).then(res => {
 					$scope.item.comentarios = $scope.item.comentarios.concat(res);
 					$scope.comment = '';
 					$scope.$apply();
@@ -205,7 +209,7 @@ angular.module('lostThings')
 		 * @returns void
 		 */
 		$scope.goDetail = function(id) {
-			$state.go('item', { id: id });
+			$state.go('detail', { 'id': id });
 		}
 
 	}
@@ -388,6 +392,8 @@ angular
         
         let token = null;
 
+        let userData = null;
+
         /**
          * Permite autenticar al usuario contra la API de PHP
          * @param {Object} user 
@@ -449,10 +455,23 @@ angular
             return token;
         }
 
+        /**
+         * Permite obtener la información del usuario logueado
+         * @returns {Object} userData
+         */
+        function getUserData() {
+            let userData = {
+                id: '222',
+                usuario: 'pepe'
+            }
+            return userData;
+        }
+
         return {
             login: login,
             register: register,
             isLogged: isLogged,
+            getUserData: getUserData,
             getToken: getToken,
             logout: logout
         }
@@ -516,7 +535,7 @@ angular
          * Permite comentar una publicación
          * @param {Object} item
          */
-        function commentPublication(item) {
+        function commentPublication(item, idUser) {
             //return $http.get(`${API_SERVER}/items/id=${id}`);
             commentPublicationMock.descripcion = item.description;
             return new Promise((resolve, reject) => resolve(commentPublicationMock));

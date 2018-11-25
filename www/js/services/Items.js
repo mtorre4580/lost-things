@@ -55,7 +55,7 @@ angular
          * Permite comentar una publicación
          * @param {Object} item
          */
-        function commentPublication(item) {
+        function commentPublication(item, idUser) {
             //return $http.get(`${API_SERVER}/items/id=${id}`);
             commentPublicationMock.descripcion = item.description;
             return new Promise((resolve, reject) => resolve(commentPublicationMock));

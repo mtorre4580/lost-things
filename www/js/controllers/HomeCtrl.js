@@ -71,7 +71,7 @@ angular.module('lostThings')
 		 * @returns void
 		 */
 		$scope.goDetail = function(id) {
-			$state.go('item', { id: id });
+			$state.go('detail', { 'id': id });
 		}
 
 	}

@@ -162,7 +162,6 @@ ion-item.item.item-avatar.item-comments {
     font-size: 1.2rem;
     padding: 0.2em;
 }
-
 .container-form-input-comment {
     display: flex;
 }
@@ -170,4 +169,7 @@ ion-item.item.item-avatar.item-comments {
     flex: 1;
     padding: 0.2em;
     border-radius: 0.2em;
+}
+a.button.icon-left.ion-chevron-left.button-clear {
+    color: #fff;
 }
