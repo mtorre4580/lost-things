@@ -124,7 +124,6 @@ button.button.icon-left.ion-search.button-search {
     color: #444;
     font-size: 16px;
 }
-
 .container-not-results {
     margin-top: 2em;
     text-align: center;
@@ -139,4 +138,36 @@ button.button.icon-left.ion-search.button-search {
 .not-results-text {
     margin-top: 1em; 
     color:#bdbdbd;
+}
+.item-comments {
+    border: none;
+}
+ion-item.item.item-avatar.item-comments {
+    border-bottom: 2px solid #dedede !important;
+}
+.title-comments {
+    text-align: center;
+    color:#fff;
+    background-color:#212121;
+    padding: 0.4em;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 1.2rem;
+}
+.pic-item {
+    width: 100%;
+    height: auto;
+}
+.title-item-detail {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 1.2rem;
+    padding: 0.2em;
+}
+
+.container-form-input-comment {
+    display: flex;
+}
+.container-form-input-comment textarea {
+    flex: 1;
+    padding: 0.2em;
+    border-radius: 0.2em;
 }

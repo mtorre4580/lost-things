@@ -1,9 +1,10 @@
 angular.module('lostThings')
 .controller('HomeCtrl', [
 	'$scope',
+	'$state',
 	'Items',
 	'Utils',
-	function($scope, Items, Utils) {
+	function($scope, $state, Items, Utils) {
 		
 		//Flag para mostrar el campo de búsqueda
 		$scope.showSearch = false;
@@ -62,6 +63,15 @@ angular.module('lostThings')
 			}).catch(_err => { 
 				Utils.showPopup('Home', 'Se produjo un error al obtener los resultados')
 			});
+		}
+
+		/**
+		 * Permite ir al detalle de una publicación
+		 * @param {number} id
+		 * @returns void
+		 */
+		$scope.goDetail = function(id) {
+			$state.go('item', { id: id });
 		}
 
 	}

@@ -20,6 +20,7 @@ angular
             //     return false;
             // });
             //MOCK
+            token = 'fake-token';
             return new Promise((resolve, reject) => resolve(true));
         }
 

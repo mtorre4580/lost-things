@@ -41,10 +41,32 @@ angular
             return new Promise((resolve, reject) => resolve(publishItemMock));
         }
 
+        /**
+         * Permite obtener el detalle de una publicacion
+         * @param {number} id
+         * @returns Promise
+         */
+        function getDetail(id) {
+            //return $http.get(`${API_SERVER}/items/id=${id}`);
+            return new Promise((resolve, reject) => resolve(mockgetDetail));
+        }
+
+        /**
+         * Permite comentar una publicación
+         * @param {Object} item
+         */
+        function commentPublication(item) {
+            //return $http.get(`${API_SERVER}/items/id=${id}`);
+            commentPublicationMock.descripcion = item.description;
+            return new Promise((resolve, reject) => resolve(commentPublicationMock));
+        }
+
         return {
             getAllItems: getAllItems,
             searchItems: searchItems,
-            publishItem: publishItem
+            publishItem: publishItem,
+            getDetail: getDetail,
+            commentPublication: commentPublication
         }
 
     }

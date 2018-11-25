@@ -1,6 +1,6 @@
 angular
 .module('lostThings', ['ionic'])
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $state, Utils, Authentication) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.Keyboard) {
       window.Keyboard.hideKeyboardAccessoryBar(true);
@@ -9,6 +9,18 @@ angular
       StatusBar.styleDefault();
     }
   });
+  
+  //Permite validar cuando cambia el state si tiene permisos el usuario para acceder a una view especifica
+  $rootScope.$on('$stateChangeStart', function(event, toState){
+    if (toState.data != undefined && toState.data.requiresAuth) {
+      if (!Authentication.isLogged()) {
+        event.preventDefault();
+        Utils.showPopup('Usuario no autorizado','No se puede acceder a esta sección sin estar autenticado.')
+             .then(() => $state.go('login'));
+      }
+    }
+  });
+
 }).config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   /*
     Rutas de la aplicacion, hay 2 views las cuales no
@@ -39,6 +51,18 @@ angular
           templateUrl: 'templates/dashboard-publish.html',
           controller: 'PublishCtrl'
         }
+      },
+      data: {
+        requiresAuth: true
+      }
+    })
+
+    .state('item', {
+      url: '/item/:id',
+      templateUrl: 'templates/detail.html',
+      controller: 'DetailCtrl',
+      data: {
+        requiresAuth: true
       }
     })
 
@@ -64,12 +88,57 @@ angular
     $ionicConfigProvider.backButton.text('Atrás');
 
 }).constant('API_SERVER', 'http://localhost/lostthings/api');
+angular
+.module('lostThings')
+.controller('DetailCtrl', [
+	'$scope',
+	'$stateParams',
+	'Utils',
+	'Items',
+	function($scope, $stateParams, Utils, Items) {
+		
+		//Request item
+		$scope.item = null;
+
+		//Request comentario
+		$scope.comment = { description: '', idUser: '' };
+
+		//Obtengo el detalle de la publicación
+		Items.getDetail($stateParams.id).then(function(res) {
+			$scope.item = res;
+		}).catch(_err => Utils.showPopup('Detalle', 'Se produjo un error al obtener la información adicional'));
+
+		/**
+		 * Permite comentar una publicacion, realiza las validaciones y 
+		 * genera el alta del comentario en la publicacion
+		 * @param {Object} formComments
+		 * @param {Object} comment
+		 * @returns void
+		 */
+		$scope.addComment = function(formComments, comment) {
+			$scope.errors = { description: null };
+			if (formComments.description.$invalid) {
+				if (formComments.description.$error.required) {
+					$scope.errors.description = 'El campo no puede ser vacío';
+				}
+			} else {
+				Items.commentPublication(comment).then(res => {
+					$scope.item.comentarios = $scope.item.comentarios.concat(res);
+					$scope.comment = '';
+					$scope.$apply();
+				}).catch(_err => Utils.showPopup('Comentar', 'Se produjo un error al comentar'));
+			}
+		}
+
+	}
+]);
 angular.module('lostThings')
 .controller('HomeCtrl', [
 	'$scope',
+	'$state',
 	'Items',
 	'Utils',
-	function($scope, Items, Utils) {
+	function($scope, $state, Items, Utils) {
 		
 		//Flag para mostrar el campo de búsqueda
 		$scope.showSearch = false;
@@ -128,6 +197,15 @@ angular.module('lostThings')
 			}).catch(_err => { 
 				Utils.showPopup('Home', 'Se produjo un error al obtener los resultados')
 			});
+		}
+
+		/**
+		 * Permite ir al detalle de una publicación
+		 * @param {number} id
+		 * @returns void
+		 */
+		$scope.goDetail = function(id) {
+			$state.go('item', { id: id });
 		}
 
 	}
@@ -324,6 +402,7 @@ angular
             //     return false;
             // });
             //MOCK
+            token = 'fake-token';
             return new Promise((resolve, reject) => resolve(true));
         }
 
@@ -423,10 +502,32 @@ angular
             return new Promise((resolve, reject) => resolve(publishItemMock));
         }
 
+        /**
+         * Permite obtener el detalle de una publicacion
+         * @param {number} id
+         * @returns Promise
+         */
+        function getDetail(id) {
+            //return $http.get(`${API_SERVER}/items/id=${id}`);
+            return new Promise((resolve, reject) => resolve(mockgetDetail));
+        }
+
+        /**
+         * Permite comentar una publicación
+         * @param {Object} item
+         */
+        function commentPublication(item) {
+            //return $http.get(`${API_SERVER}/items/id=${id}`);
+            commentPublicationMock.descripcion = item.description;
+            return new Promise((resolve, reject) => resolve(commentPublicationMock));
+        }
+
         return {
             getAllItems: getAllItems,
             searchItems: searchItems,
-            publishItem: publishItem
+            publishItem: publishItem,
+            getDetail: getDetail,
+            commentPublication: commentPublication
         }
 
     }

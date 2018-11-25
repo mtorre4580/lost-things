@@ -1,6 +1,6 @@
 angular
 .module('lostThings', ['ionic'])
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $state, Utils, Authentication) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.Keyboard) {
       window.Keyboard.hideKeyboardAccessoryBar(true);
@@ -9,6 +9,18 @@ angular
       StatusBar.styleDefault();
     }
   });
+  
+  //Permite validar cuando cambia el state si tiene permisos el usuario para acceder a una view especifica
+  $rootScope.$on('$stateChangeStart', function(event, toState){
+    if (toState.data != undefined && toState.data.requiresAuth) {
+      if (!Authentication.isLogged()) {
+        event.preventDefault();
+        Utils.showPopup('Usuario no autorizado','No se puede acceder a esta sección sin estar autenticado.')
+             .then(() => $state.go('login'));
+      }
+    }
+  });
+
 }).config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   /*
     Rutas de la aplicacion, hay 2 views las cuales no
@@ -39,6 +51,18 @@ angular
           templateUrl: 'templates/dashboard-publish.html',
           controller: 'PublishCtrl'
         }
+      },
+      data: {
+        requiresAuth: true
+      }
+    })
+
+    .state('item', {
+      url: '/item/:id',
+      templateUrl: 'templates/detail.html',
+      controller: 'DetailCtrl',
+      data: {
+        requiresAuth: true
       }
     })
 

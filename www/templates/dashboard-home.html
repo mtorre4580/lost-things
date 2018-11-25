@@ -18,7 +18,7 @@
       <ion-refresher pulling-text="Actualizando resultados..." on-refresh="doRefresh()"></ion-refresher>
       <!-- Resultados de items si hay -->
       <ion-list ng-if="items.length > 0">
-        <ion-item class="list card" ng-repeat="item in items">
+        <ion-item class="list card" ng-repeat="item in items" ng-click="goDetail(item.producto.id)">
             <div class="item item-avatar">
               <img ng-src="{{item.usuario.avatar}}" alt="avatar de {{item.usuario.nombre}}">
               <h3 class="text-bold">{{item.usuario.nombre}}</h3>
