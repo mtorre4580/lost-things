@@ -30,11 +30,13 @@ angular
   */
   $stateProvider
     
+    //View abstract que sirve de base para los tabs del dashboard
     .state('dashboard', {
       url: '/dashboard',
       abstract: true,
       templateUrl: 'templates/dashboard.html'
     })
+    //Tabs
     .state('dashboard.home', {
       url: '/home',
       views: {
@@ -64,6 +66,7 @@ angular
         requiresAuth: true
       }
     })
+    //Estas views no dependen del dashboard, ya que no se quiere mostrar los tabs...
     .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
