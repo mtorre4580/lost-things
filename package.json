@@ -1,0 +1,11 @@
+{
+  "name": "lost_things",
+  "version": "0.0.1",
+  "description": "An Ionic project",
+  "devDependencies": {
+    "@ionic/v1-toolkit": "^1.0.0",
+    "gulp": "^3.5.6",
+    "gulp-rename": "^1.2.0",
+    "gulp-concat": "^2.2.0"
+  }
+}
