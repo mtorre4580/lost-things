@@ -60,153 +60,6 @@ angular
   $ionicConfigProvider.backButton.text('Atrás');
 
 }).constant('API_SERVER', 'http://localhost/lostthings/api');
-angular
-.module('lostThings')
-.factory('Authentication', 
-    ['$http', 'API_SERVER', 
-    function($http, API_SERVER){
-        
-        let token = null;
-
-        /**
-         * Permite autenticar al usuario contra la API de PHP
-         * @param {Object} user 
-         * @return boolean
-         */
-        function login(user) {
-            // return $http.post(`${API_SERVER}/login`, user).then(function(res) {
-            //     let response = res.data;
-            //     if (response.status == 1) {
-            //         return true;
-            //     }
-            //     return false;
-            // });
-            //MOCK
-            return new Promise((resolve, reject) => resolve(true));
-        }
-
-        /**
-         * Permite registrar al usuario utilizando la API de PHP
-         * @param {Object} user 
-         * @returns Object
-         */
-        function register(user) {
-            // return $http.post(`${API_SERVER}/register`, user).then(function(res) {
-            //     let response = res.data;
-            //     if (response.status == 1) {
-            //         //token = response.data.token;
-            //         // userData = {
-            //         //     id		: response.data.id,
-            //         //     usuario : response.data.usuario
-            //         // };
-            //         return true;
-            //     }
-            //     return false;
-            // });
-
-            //MOCK
-            return new Promise((resolve,reject) => resolve());
-        }
-
-        /**
-         * Permite saber si el usuario esta logueado, valida si existe el token
-         * @return boolean
-         */
-        function isLogged() {
-            return token !== null;
-        }
-
-        /**
-         * Permite obtener el token JWT
-         * @return token
-         */
-        function getToken() {
-            return token;
-        }
-
-        return {
-            login: login,
-            register: register,
-            isLogged: isLogged,
-            getToken: getToken,
-        }
-
-    }
-]);
-angular
-.module('lostThings')
-.factory('Items', 
-    ['$http', 'API_SERVER', 
-    function($http, API_SERVER){
-        
-        /**
-         * Permite obtener todos los items perdidos
-         * @returns Promise
-         */
-        function getAllItems() {
-            /*return $http.get(`${API_SERVER}/items`).then(function(res) {
-                
-            });*/
-            //Mock
-            return new Promise((resolve, reject) => resolve(getAllMock));
-        }
-
-        /**
-         * Permite buscar los items por el valor ingresado como parametro
-         * @param {string} search 
-         * returns Promise
-         */
-        function searchItems(search) {
-            // return $http.get(`${API_SERVER}/items?search=${search}`).then(function(res) {
-                
-            // });
-            //Mock
-            return new Promise((resolve, reject) => resolve(searchItemsMock));
-        }
-
-        /**
-         * Permite publicar un item para mostrarse en el listado
-         * @param {Object} item 
-         */
-        function publishItem(item) {
-            /*return $http.post(`${API_SERVER}/items`).then(function(res) {
-                
-            });*/
-            //Mock
-            return new Promise((resolve, reject) => resolve(publishItemMock));
-        }
-
-        return {
-            getAllItems: getAllItems,
-            searchItems: searchItems,
-            publishItem: publishItem
-        }
-
-    }
-]);
-
-angular
-.module('lostThings')
-.factory('Utils', 
-    ['$ionicPopup', 
-    function($ionicPopup){
-        
-        /**
-		 * Permite crear una instancia del popup de ionic
-		 * @param {string} title titulo del popup
-		 * @param {string} text texto del popup, puede ser HTML
-		 * @returns Promise
-		 */
-		function showPopup(title, text) {
-			return $ionicPopup.alert({ title: title, template: text, cssClass:'lost-things-popup', okText: 'Aceptar' });
-		}
-
-        return {
-            showPopup: showPopup
-        }
-
-    }
-]);
 angular.module('lostThings')
 .controller('HomeCtrl', [
 	'$scope',
@@ -408,4 +261,151 @@ angular
 		}
 
 	}
+]);
+angular
+.module('lostThings')
+.factory('Authentication', 
+    ['$http', 'API_SERVER', 
+    function($http, API_SERVER){
+        
+        let token = null;
+
+        /**
+         * Permite autenticar al usuario contra la API de PHP
+         * @param {Object} user 
+         * @return boolean
+         */
+        function login(user) {
+            // return $http.post(`${API_SERVER}/login`, user).then(function(res) {
+            //     let response = res.data;
+            //     if (response.status == 1) {
+            //         return true;
+            //     }
+            //     return false;
+            // });
+            //MOCK
+            return new Promise((resolve, reject) => resolve(true));
+        }
+
+        /**
+         * Permite registrar al usuario utilizando la API de PHP
+         * @param {Object} user 
+         * @returns Object
+         */
+        function register(user) {
+            // return $http.post(`${API_SERVER}/register`, user).then(function(res) {
+            //     let response = res.data;
+            //     if (response.status == 1) {
+            //         //token = response.data.token;
+            //         // userData = {
+            //         //     id		: response.data.id,
+            //         //     usuario : response.data.usuario
+            //         // };
+            //         return true;
+            //     }
+            //     return false;
+            // });
+
+            //MOCK
+            return new Promise((resolve,reject) => resolve());
+        }
+
+        /**
+         * Permite saber si el usuario esta logueado, valida si existe el token
+         * @return boolean
+         */
+        function isLogged() {
+            return token !== null;
+        }
+
+        /**
+         * Permite obtener el token JWT
+         * @return token
+         */
+        function getToken() {
+            return token;
+        }
+
+        return {
+            login: login,
+            register: register,
+            isLogged: isLogged,
+            getToken: getToken,
+        }
+
+    }
+]);
+angular
+.module('lostThings')
+.factory('Items', 
+    ['$http', 'API_SERVER', 
+    function($http, API_SERVER){
+        
+        /**
+         * Permite obtener todos los items perdidos
+         * @returns Promise
+         */
+        function getAllItems() {
+            /*return $http.get(`${API_SERVER}/items`).then(function(res) {
+                
+            });*/
+            //Mock
+            return new Promise((resolve, reject) => resolve(getAllMock));
+        }
+
+        /**
+         * Permite buscar los items por el valor ingresado como parametro
+         * @param {string} search 
+         * returns Promise
+         */
+        function searchItems(search) {
+            // return $http.get(`${API_SERVER}/items?search=${search}`).then(function(res) {
+                
+            // });
+            //Mock
+            return new Promise((resolve, reject) => resolve(searchItemsMock));
+        }
+
+        /**
+         * Permite publicar un item para mostrarse en el listado
+         * @param {Object} item 
+         */
+        function publishItem(item) {
+            /*return $http.post(`${API_SERVER}/items`).then(function(res) {
+                
+            });*/
+            //Mock
+            return new Promise((resolve, reject) => resolve(publishItemMock));
+        }
+
+        return {
+            getAllItems: getAllItems,
+            searchItems: searchItems,
+            publishItem: publishItem
+        }
+
+    }
+]);
+
+angular
+.module('lostThings')
+.factory('Utils', 
+    ['$ionicPopup', 
+    function($ionicPopup){
+        
+        /**
+		 * Permite crear una instancia del popup de ionic
+		 * @param {string} title titulo del popup
+		 * @param {string} text texto del popup, puede ser HTML
+		 * @returns Promise
+		 */
+		function showPopup(title, text) {
+			return $ionicPopup.alert({ title: title, template: text, cssClass:'lost-things-popup', okText: 'Aceptar' });
+		}
+
+        return {
+            showPopup: showPopup
+        }
+
+    }
 ]);
