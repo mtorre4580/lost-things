@@ -52,12 +52,16 @@ angular
       templateUrl: 'templates/register.html',
       controller: 'RegisterCtrl'
     })
+    .state('logout', {
+      url: '/logout',
+      controller: 'LogoutCtrl'
+    })
 
-  // //Por default se muestra la view de login...
+    //Por default se muestra la view de login...
     $urlRouterProvider.otherwise('/login');
 
-  //Se configura el texto del button back a mostrar...
-  $ionicConfigProvider.backButton.text('Atrás');
+    //Se configura el texto del button back a mostrar...
+    $ionicConfigProvider.backButton.text('Atrás');
 
 }).constant('API_SERVER', 'http://localhost/lostthings/api');
 angular.module('lostThings')
@@ -66,14 +70,14 @@ angular.module('lostThings')
 	'Items',
 	'Utils',
 	function($scope, Items, Utils) {
-
+		
+		//Flag para mostrar el campo de búsqueda
 		$scope.showSearch = false;
 
-		Items.getAllItems().then(res => {
-			$scope.items = res;
-		}).catch(_err => { 
-			Utils.showPopup('Home', 'Se produjo un error al obtener los resultados')
-		});
+		//Al ingresar a la view, actualiza la lista de items
+		$scope.$on('$ionicView.beforeEnter', function() {
+			$scope.getAllItems();
+	    });	
 
 		/**
 		 * Permite mostrar y esconder el formulario
@@ -85,9 +89,9 @@ angular.module('lostThings')
 		}
 
 		/**
-		 * Permite buscar los items, por default se busca '',
-		 * osea trae todo
+		 * Permite buscar los items, por default se busca '', osea trae todo
 		 * @param {string} search
+		 * @returns void
 		 */
 		$scope.searchItems = function(search = '') {
 			Items.searchItems(search).then(res => {
@@ -98,6 +102,11 @@ angular.module('lostThings')
 			});
 		}
 
+		/**
+		 * Permite actualizar la lista de resultados...
+		 * Emite un evento para decirle que termino y que corte el refresh...
+		 * @returns void
+		 */
 		$scope.doRefresh = function() {
 			Items.getAllItems().then(res => {
 				$scope.items = res;
@@ -105,6 +114,19 @@ angular.module('lostThings')
 			}).catch(_err => { 
 				$scope.$broadcast('scroll.refreshComplete');
 				Utils.showPopup('Home', 'Se produjo un error al actualizar los resultados');
+			});
+		}
+
+		/**
+		 * Permite obtener todos los items publicados hasta la fecha,
+		 * muestra mensaje de error si ocurre un error...
+		 * @returns void
+		 */
+		$scope.getAllItems = function() {
+			Items.getAllItems().then(res => {
+				$scope.items = res;
+			}).catch(_err => { 
+				Utils.showPopup('Home', 'Se produjo un error al obtener los resultados')
 			});
 		}
 
@@ -127,6 +149,7 @@ angular
 		 * Valida los datos recibidos, si sale todo OK si sale bien , redirige...
 		 * @param formLogin 
 		 * @param user 
+		 * @returns void
 		 */
 		$scope.login = function(formLogin, user) {
 			$scope.errors = validateFields(formLogin);
@@ -165,6 +188,16 @@ angular
 ]);
 angular
 .module('lostThings')
+.controller('LogoutCtrl', [
+	'$state',
+	'Authentication',
+	function($state, Authentication) {
+		Authentication.logout();
+		$state.go('login');
+	}
+]);
+angular
+.module('lostThings')
 .controller('PublishCtrl', [
 	'$scope',
 	'$state',
@@ -175,19 +208,25 @@ angular
 		//Request Publish
 		$scope.item = { name: '', description: '', pic: null };
 		
+		/**
+		 * Permite publicar un articulo para que se pueda encontrar
+		 * Si sale todo ok, redirige al home...
+		 * @param {Object} formPublish
+		 * @param {Object} item
+		 * @returns void
+		 */
 		$scope.publish = function(formPublish, item) {
 			$scope.errors = validateFields(formPublish);
 			if ($scope.errors.name === null && $scope.errors.description === null) {
 				Items.publishItem(item).then(() =>  {
 					Utils.showPopup('Publicar', '<p>Se ha subido su publicación <br /> ¡Buena suerte!</p>')
-							.then(() => $state.go('dashboard.home'));
+						 .then(() => $state.go('dashboard.home'));
 				}).catch(_error => Utils.showPopup('Publicar', '¡Ups se produjo un error al querer publicar su artículo'));
 			}
 		}
 
 		/**
-		 * Permite validar los datos ingresados por el usuario
-		 * al crear un item para publicar
+		 * Permite validar los datos ingresados por el usuario al crear un item para publicar
 		 * @param {Object} formPublish 
 		 * @return errors
 		 */
@@ -225,6 +264,7 @@ angular
 		 * realiza un redirect al login
 		 * @param formRegister 
 		 * @param user 
+		 * @returns void
 		 */
 		$scope.register = function(formRegister, user) {
 			$scope.errors = validateFields(formRegister);
@@ -287,6 +327,10 @@ angular
             return new Promise((resolve, reject) => resolve(true));
         }
 
+        function logout() {
+            token = null;
+        }
+
         /**
          * Permite registrar al usuario utilizando la API de PHP
          * @param {Object} user 
@@ -331,6 +375,7 @@ angular
             register: register,
             isLogged: isLogged,
             getToken: getToken,
+            logout: logout
         }
 
     }

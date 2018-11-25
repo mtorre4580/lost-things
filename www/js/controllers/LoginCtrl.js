@@ -15,6 +15,7 @@ angular
 		 * Valida los datos recibidos, si sale todo OK si sale bien , redirige...
 		 * @param formLogin 
 		 * @param user 
+		 * @returns void
 		 */
 		$scope.login = function(formLogin, user) {
 			$scope.errors = validateFields(formLogin);

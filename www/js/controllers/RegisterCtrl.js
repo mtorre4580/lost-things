@@ -15,6 +15,7 @@ angular
 		 * realiza un redirect al login
 		 * @param formRegister 
 		 * @param user 
+		 * @returns void
 		 */
 		$scope.register = function(formRegister, user) {
 			$scope.errors = validateFields(formRegister);

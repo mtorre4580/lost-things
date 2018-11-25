@@ -10,19 +10,25 @@ angular
 		//Request Publish
 		$scope.item = { name: '', description: '', pic: null };
 		
+		/**
+		 * Permite publicar un articulo para que se pueda encontrar
+		 * Si sale todo ok, redirige al home...
+		 * @param {Object} formPublish
+		 * @param {Object} item
+		 * @returns void
+		 */
 		$scope.publish = function(formPublish, item) {
 			$scope.errors = validateFields(formPublish);
 			if ($scope.errors.name === null && $scope.errors.description === null) {
 				Items.publishItem(item).then(() =>  {
 					Utils.showPopup('Publicar', '<p>Se ha subido su publicación <br /> ¡Buena suerte!</p>')
-							.then(() => $state.go('dashboard.home'));
+						 .then(() => $state.go('dashboard.home'));
 				}).catch(_error => Utils.showPopup('Publicar', '¡Ups se produjo un error al querer publicar su artículo'));
 			}
 		}
 
 		/**
-		 * Permite validar los datos ingresados por el usuario
-		 * al crear un item para publicar
+		 * Permite validar los datos ingresados por el usuario al crear un item para publicar
 		 * @param {Object} formPublish 
 		 * @return errors
 		 */

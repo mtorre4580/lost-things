@@ -23,6 +23,10 @@ angular
             return new Promise((resolve, reject) => resolve(true));
         }
 
+        function logout() {
+            token = null;
+        }
+
         /**
          * Permite registrar al usuario utilizando la API de PHP
          * @param {Object} user 
@@ -67,6 +71,7 @@ angular
             register: register,
             isLogged: isLogged,
             getToken: getToken,
+            logout: logout
         }
 
     }

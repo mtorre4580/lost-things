@@ -1,6 +1,7 @@
 <ion-view title="Publicar">
     <ion-content class="padding">
-        <form name="formPublish" ng-submit="publish(formPublish, item)" novalidate>
+        <!-- Form publicar -->
+        <form name="formPublish" ng-submit="publish(formPublish, item)" novalidate enctype="multipart/form-data">
             <div class="list">
                 <label class="item item-input item-stacked-label item-form">
                     <span class="input-label">Nombre del ítem</span>
@@ -11,8 +12,7 @@
                 </div>
                 <label class="item item-input item-stacked-label item-form">
                     <span class="input-label">Descripción del mismo</span>
-                    <textarea name="description" ng-model="item.description" 
-                    rows="4"
+                    <textarea name="description" ng-model="item.description" rows="4"
                     placeholder="Ejemplo: Lo perdí en la facultad de medicina el jueves pasado..." required></textarea>
                 </label>
                 <div class="invalid-form" ng-show="errors.description">

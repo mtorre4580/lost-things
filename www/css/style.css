@@ -124,3 +124,19 @@ button.button.icon-left.ion-search.button-search {
     color: #444;
     font-size: 16px;
 }
+
+.container-not-results {
+    margin-top: 2em;
+    text-align: center;
+}
+.container-icon-not-results {
+    display: flex;
+    justify-content: center;
+}
+.icon-alert {
+    font-size: 4rem;
+}
+.not-results-text {
+    margin-top: 1em; 
+    color:#bdbdbd;
+}

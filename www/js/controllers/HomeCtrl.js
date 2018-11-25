@@ -4,14 +4,14 @@ angular.module('lostThings')
 	'Items',
 	'Utils',
 	function($scope, Items, Utils) {
-
+		
+		//Flag para mostrar el campo de búsqueda
 		$scope.showSearch = false;
 
-		Items.getAllItems().then(res => {
-			$scope.items = res;
-		}).catch(_err => { 
-			Utils.showPopup('Home', 'Se produjo un error al obtener los resultados')
-		});
+		//Al ingresar a la view, actualiza la lista de items
+		$scope.$on('$ionicView.beforeEnter', function() {
+			$scope.getAllItems();
+	    });	
 
 		/**
 		 * Permite mostrar y esconder el formulario
@@ -23,9 +23,9 @@ angular.module('lostThings')
 		}
 
 		/**
-		 * Permite buscar los items, por default se busca '',
-		 * osea trae todo
+		 * Permite buscar los items, por default se busca '', osea trae todo
 		 * @param {string} search
+		 * @returns void
 		 */
 		$scope.searchItems = function(search = '') {
 			Items.searchItems(search).then(res => {
@@ -36,6 +36,11 @@ angular.module('lostThings')
 			});
 		}
 
+		/**
+		 * Permite actualizar la lista de resultados...
+		 * Emite un evento para decirle que termino y que corte el refresh...
+		 * @returns void
+		 */
 		$scope.doRefresh = function() {
 			Items.getAllItems().then(res => {
 				$scope.items = res;
@@ -43,6 +48,19 @@ angular.module('lostThings')
 			}).catch(_err => { 
 				$scope.$broadcast('scroll.refreshComplete');
 				Utils.showPopup('Home', 'Se produjo un error al actualizar los resultados');
+			});
+		}
+
+		/**
+		 * Permite obtener todos los items publicados hasta la fecha,
+		 * muestra mensaje de error si ocurre un error...
+		 * @returns void
+		 */
+		$scope.getAllItems = function() {
+			Items.getAllItems().then(res => {
+				$scope.items = res;
+			}).catch(_err => { 
+				Utils.showPopup('Home', 'Se produjo un error al obtener los resultados')
 			});
 		}
 

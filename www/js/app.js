@@ -52,11 +52,15 @@ angular
       templateUrl: 'templates/register.html',
       controller: 'RegisterCtrl'
     })
+    .state('logout', {
+      url: '/logout',
+      controller: 'LogoutCtrl'
+    })
 
-  // //Por default se muestra la view de login...
+    //Por default se muestra la view de login...
     $urlRouterProvider.otherwise('/login');
 
-  //Se configura el texto del button back a mostrar...
-  $ionicConfigProvider.backButton.text('Atrás');
+    //Se configura el texto del button back a mostrar...
+    $ionicConfigProvider.backButton.text('Atrás');
 
 }).constant('API_SERVER', 'http://localhost/lostthings/api');
