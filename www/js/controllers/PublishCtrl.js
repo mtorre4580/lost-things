@@ -19,7 +19,7 @@ angular
 		 */
 		$scope.publish = function(formPublish, item) {
 			$scope.errors = validateFields(formPublish);
-			if ($scope.errors.name === null && $scope.errors.description === null) {
+			if ($scope.errors.name === null && $scope.errors.description === null && $scope.errors.pic === null) {
 				Items.publishItem(item).then(() =>  {
 					Utils.showPopup('Publicar', '<p>Se ha subido su publicación <br /> ¡Buena suerte!</p>')
 						 .then(() => $state.go('dashboard.home'));
@@ -33,7 +33,7 @@ angular
 		 * @return errors
 		 */
 		function validateFields(formPublish) {
-			let errors = { name: null, description: null };
+			let errors = { name: null, description: null, pic: null };
 			if (formPublish.name.$invalid) {
 				if (formPublish.name.$error.required) {
 					errors.name = 'El campo nombre no puede ser vacío';
@@ -43,6 +43,9 @@ angular
 				if (formPublish.description.$error.required) {
 					errors.description = 'El campo descripción no puede ser vacío';
 				}
+			}
+			if (formPublish.file.$error.maxsize) {
+				errors.pic = 'La imagen no puede exceder 1MB';
 			}
 			return errors;
 		}

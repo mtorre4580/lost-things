@@ -8,7 +8,7 @@ const cleanCSS = require('gulp-clean-css');
 //Path para la ubicación de los archivos
 const PATH_FILES = {
   js: {
-    src: ['./www/js/*.js', './www/js/**/*.js'],
+    src: ['./www/js/*.js', './www/js/**/*.js', './node_modules/angular-base64-upload/dist/angular-base64-upload.js'],
     output: './www/dist/js/'
   },
   css: {

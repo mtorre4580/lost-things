@@ -7,7 +7,9 @@ npm install
 
 Tasks
 
-    gulp js:watch
-
+    gulp js 
+    gulp minify-css
+    gulp 
+    gulp release
 
 Repo: https://github.com/mtorre4580/lost-things

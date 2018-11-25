@@ -1,5 +1,15 @@
+/**
+ * Módulos que utiliza la App
+ * lostThings.controllers : Este módulo se encarga de manejar todos los controllers
+ * lostThings.services: Este módulo se encarga de manejar todos los services
+ * naif.base64: Este módulo es un módulo externo, que da una directiva para poder obtener
+ * de forma rápida el base64 de un archivo de imagen, más info en el git del user
+ * Instalación npm install angular-base64-upload --save
+ * https://github.com/adonespitogo/angular-base64-upload
+ */
+
 angular
-.module('lostThings', ['ionic', 'lostThings.controllers', 'lostThings.services'])
+.module('lostThings', ['ionic', 'lostThings.controllers', 'lostThings.services', 'naif.base64'])
 .run(function($ionicPlatform, $rootScope, $state, Utils, Authentication) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.Keyboard) {

@@ -20,10 +20,10 @@
                 </div>
                 <div class="padding container-image-pic">
                     <p>¿Posees alguna foto?</p>
-                    <div class="fileUpload button button-primary">
-                        <span style="text-align: center">Subir Imagen</span>
-                        <input type="file" class="upload" name="image" accept="image/*" ng-model="item.pic">
-                    </div>
+                    <input type="file" name="file" ng-model="item.pic" maxsize="1000" base-sixty-four-input>
+                </div>
+                <div class="invalid-form" ng-show="errors.pic">
+                    <span>{{errors.description}}</span>
                 </div>
             </div>
             <button type="submit" class="button button-dark button-block">Publicar</button>

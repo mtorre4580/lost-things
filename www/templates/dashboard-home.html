@@ -21,7 +21,8 @@
       <ion-list ng-if="items.length > 0">
         <ion-item class="list card" ng-repeat="item in items" ng-click="goDetail(item.producto.id)">
             <div class="item item-avatar">
-              <img ng-src="{{item.usuario.avatar}}" alt="avatar de {{item.usuario.nombre}}">
+              <!-- Poner el avatar cuando se registre con imagen ... {{item.usuario.avatar}} -->
+              <img ng-src="img/avatar.png" alt="avatar de {{item.usuario.nombre}}">
               <h2 class="text-bold">{{item.usuario.nombre}}</h2>
               <p>{{item.producto.fecha_publicacion}}</p>
             </div>
