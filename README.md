@@ -1,5 +1,5 @@
 # lost-things
-App Ionic 1 (Lost Things) (TP GALLINO)
+App to find lost items
 
 Install dependencies
 
